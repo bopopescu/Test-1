@@ -1,0 +1,22 @@
+body{
+            background:lightgray;
+            font-family: arial;
+        }
+
+        #container{
+            width: 60%;
+            background-color: white;
+            margin-left: 20%;
+            padding: 10px;
+        }
+
+        h3,h1{
+            color: brown;
+        }
+
+
+.highlight
+{
+ color:blue;
+ text-decoration:underline;
+}

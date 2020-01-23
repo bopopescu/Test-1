@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<head>
+    <title>Keyword Extraction</title>
+<!--    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}">-->
+
+    <style>
+        body{
+            background:lightgray;
+            font-family: arial;
+        }
+
+        #container{
+            width: 60%;
+            background-color: white;
+            margin-left: 20%;
+            padding: 10px;
+        }
+
+        h3,h1{
+            color: brown;
+        }
+
+
+        .highlight
+        {
+         color:blue;
+         text-decoration:underline;
+        }
+    </style>
+    <script>
+
+        function highlight(){
+
+            var t = document.getElementById("t").value
+            console.log(t)
+            var a = {{imp_words_dict|safe}}
+            console.log(a)
+<!--            alert(t)-->
+<!--            alert(a)-->
+
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id="container">
+        <h1 style="margin-left:30%;">Keyword Extraction</h1>
+
+        <form  action="form1"  method="post">
+
+            <h3>Select Domain Name :
+            <select name="Domains">
+                <option value="" >{{domain}}</option>
+                <option value="ML">Machine Learning</option>
+                <option value="AI">Artificial Intelligence</option>
+            </select>
+            </h3>
+
+            <h3>Issue Description : </h3>
+            <textarea id="t" rows="10" cols="70" maxlength="1000" type="text" name="description">{{text}}</textarea>
+            <br><br>
+
+            <input onclick="highlight()" type="submit" value="submit"><br>
+
+            <h3> Extracted Keywords Using Database :</h3>
+            <h4>
+            {% for word in imp_words_list_database %}
+                {{word[0]}} : {{word[1]}},
+            {% endfor %}
+            </h4>
+
+            <h3> Extracted Keywords Using Vocabulary :</h3>
+
+        </form>
+
+        <form action="form2" method="post">
+            <table>
+            {% set count = 0%}
+            {% for i in range(count,imp_words_list_vocabulary|length,3) %}
+                <tr>
+                    <h4>
+                        <td>{{imp_words_list_vocabulary[i]}}</td>
+                        <td><input name="check" type="checkbox"  value="{{imp_words_list_vocabulary[i]}}"></td>
+                        {% if imp_words_list_vocabulary[i+1]|length != 0 %}
+                            <td>{{imp_words_list_vocabulary[i+1]}}</td>
+                            <td><input name="check" type="checkbox"  value="{{imp_words_list_vocabulary[i+1]}}"></td>
+                        {% endif %}
+                        {% if imp_words_list_vocabulary[i+2]|length != 0 %}
+                            <td>{{imp_words_list_vocabulary[i+2]}}</td>
+                            <td><input name="check" type="checkbox"  value="{{imp_words_list_vocabulary[i+2]}}"></td>
+                        {% endif %}
+                    </h4>
+                </tr>
+            {% endfor %}
+            </table>
+            <input onclick="add_to_database()" type="submit" value="Add Words To Database"/>
+        </form>
+
+
+    </div>
+</body>
+</html>
